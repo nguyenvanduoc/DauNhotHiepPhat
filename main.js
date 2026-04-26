@@ -69,22 +69,21 @@ window.taoTheSanPham = function (coffee) {
     const badgeFeatured = coffee.featured ? `<div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm">Nổi Bật</div>` : '';
     const badgeSale = coffee.discountPrice ? `<div class="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm">Sale</div>` : '';
     return `
-        <div class="bg-white rounded-2xl shadow-sm border border-coffee-100 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer" onclick="xemChiTiet('${coffee.id}')">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer" onclick="xemChiTiet('${coffee.id}')">
             <div class="relative h-56 overflow-hidden img-placeholder">
                 <img src="${coffee.image}" alt="${coffee.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400?text=HiepPhat_Oil'">
                 ${badgeFeatured}
                 ${badgeSale}
             </div>
             <div class="p-5 flex flex-col h-[calc(100%-14rem)]">
-                <div class="text-xs font-bold text-coffee-400 uppercase tracking-wider mb-1">${coffee.category}</div>
-                <h3 class="text-xl font-bold text-coffee-900 mb-2 line-clamp-2">${coffee.name}</h3>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">${coffee.name}</h3>
                 <div class="mt-auto flex justify-between items-center pt-4">
                     <div>
                         ${coffee.discountPrice
             ? `<span class="text-lg font-black text-red-600">${window.formatVND(coffee.discountPrice)}</span> <span class="text-sm font-medium text-gray-400 line-through ml-1">${window.formatVND(coffee.price)}</span>`
-            : `<span class="text-lg font-black text-coffee-600">${window.formatVND(coffee.price)}</span>`}
+            : `<span class="text-lg font-black text-castrol-700">${window.formatVND(coffee.price)}</span>`}
                     </div>
-                    <button class="w-10 h-10 rounded-full bg-coffee-100 text-coffee-700 flex items-center justify-center group-hover:bg-coffee-600 group-hover:text-white transition-colors">
+                    <button class="w-10 h-10 rounded-full bg-gray-100 text-gray-700 flex items-center justify-center group-hover:bg-castrol-700 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
@@ -99,13 +98,13 @@ window.renderFilters = function () {
     if (!filterContainer) return;
 
     const isAllActive = currentFilterCategory === "Tất cả";
-    let html = `<button onclick="filterCoffees('Tất cả', this)" class="filter-btn px-6 py-2 ${isAllActive ? 'bg-coffee-600 text-white' : 'bg-white text-coffee-700 hover:bg-coffee-100'} rounded-full font-medium shadow-sm transition-colors">Tất cả</button>`;
+    let html = `<button onclick="filterCoffees('Tất cả', this)" class="filter-btn px-4 py-2 ${isAllActive ? 'text-castrol-700 font-bold border-b-2 border-castrol-700' : 'text-gray-500 hover:text-castrol-700 font-medium'} transition-all">Tất cả</button>`;
 
     window.categoriesData.forEach(cat => {
         const isActive = currentFilterCategory === cat.name;
         const btnClass = isActive
-            ? "filter-btn px-6 py-2 bg-coffee-600 text-white rounded-full font-medium shadow-sm transition-colors"
-            : "filter-btn px-6 py-2 bg-white text-coffee-700 hover:bg-coffee-100 rounded-full font-medium shadow-sm transition-colors";
+            ? "filter-btn px-4 py-2 text-castrol-700 font-bold border-b-2 border-castrol-700 transition-all"
+            : "filter-btn px-4 py-2 text-gray-500 hover:text-castrol-700 font-medium transition-all";
 
         html += `<button onclick="filterCoffees('${cat.name}', this)" class="${btnClass}">${cat.name}</button>`;
     });
@@ -117,8 +116,8 @@ window.renderFilters = function () {
 window.filterCoffees = function (categoryName, btnElement) {
     currentFilterCategory = categoryName;
     const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => btn.className = 'filter-btn px-6 py-2 bg-white text-coffee-700 hover:bg-coffee-100 rounded-full font-medium shadow-sm transition-colors');
-    if (btnElement) btnElement.className = 'filter-btn px-6 py-2 bg-coffee-600 text-white rounded-full font-medium shadow-sm transition-colors';
+    buttons.forEach(btn => btn.className = 'filter-btn px-4 py-2 text-gray-500 hover:text-castrol-700 font-medium transition-all');
+    if (btnElement) btnElement.className = 'filter-btn px-4 py-2 text-castrol-700 font-bold border-b-2 border-castrol-700 transition-all';
 
     renderListOnly();
 };
@@ -130,7 +129,7 @@ window.renderSanPhams = function () {
         const featuredCoffees = window.coffeesData.filter(c => c.featured);
         featuredGrid.innerHTML = featuredCoffees.length > 0
             ? featuredCoffees.map(window.taoTheSanPham).join('')
-            : `<p class="col-span-full text-center text-coffee-500 italic">Hiện chưa có sản phẩm nổi bật nào.</p>`;
+            : `<p class="col-span-full text-center text-gray-500 italic">Hiện chưa có sản phẩm nổi bật nào.</p>`;
     }
     renderListOnly();
 };
@@ -161,7 +160,7 @@ window.xemChiTiet = function (coffeeId, addToHistory = true) {
     if (!coffee) return;
 
     document.getElementById('detail-img').src = coffee.image;
-    document.getElementById('detail-category').textContent = coffee.category;
+    // document.getElementById('detail-category').textContent = coffee.category; // Bỏ hiển thị loại sản phẩm
     document.getElementById('detail-title').textContent = coffee.name;
     document.getElementById('detail-price').innerHTML = coffee.discountPrice
         ? `<span class="text-red-600">${window.formatVND(coffee.discountPrice)}</span> <span class="text-lg text-gray-400 line-through ml-2">${window.formatVND(coffee.price)}</span>`
@@ -321,7 +320,7 @@ function appendMessage(text, sender) {
 
 function botReply(userMsg) {
     const lowerMsg = userMsg.toLowerCase();
-    let reply = "Xin lỗi, mình là Trợ lý AI đang trong giai đoạn học hỏi nên chưa hiểu rõ ý bạn. Bạn có thể liên hệ Zalo 0399.232.692 để được hỗ trợ tốt nhất về các loại dầu nhớt nhé!";
+    let reply = "Xin lỗi, mình là Trợ lý AI đang trong giai đoạn học hỏi nên chưa hiểu rõ ý bạn. Bạn có thể liên hệ Zalo 0869.824.868 để được hỗ trợ tốt nhất về các loại dầu nhớt nhé!";
 
     if (lowerMsg.includes("chào") || lowerMsg.includes("hi") || lowerMsg.includes("hello")) {
         reply = "Chào bạn! Mình có thể giúp gì cho bạn hôm nay?";
@@ -330,9 +329,9 @@ function botReply(userMsg) {
     } else if (lowerMsg.includes("menu") || lowerMsg.includes("thực đơn") || lowerMsg.includes("có món gì") || lowerMsg.includes("sản phẩm")) {
         reply = "Bên mình chuyên các loại dầu nhớt xe máy, ô tô, mỡ bò và phụ gia từ Castrol, Motul, Shell... Bạn có thể nhấn vào mục Sản Phẩm để xem chi tiết nhé!";
     } else if (lowerMsg.includes("địa chỉ") || lowerMsg.includes("ở đâu") || lowerMsg.includes("cửa hàng")) {
-        reply = "Cửa hàng hiện đang giao hàng tận nơi tại khu vực Ninh Phước, Ninh Thuận. Bạn có muốn đặt mua dầu nhớt không ạ?";
+        reply = "Cửa hàng hiện đang giao hàng tận nơi tại khu vực Khánh Hòa. Bạn có muốn đặt mua dầu nhớt không ạ?";
     } else if (lowerMsg.includes("liên hệ") || lowerMsg.includes("sđt") || lowerMsg.includes("số điện thoại") || lowerMsg.includes("zalo")) {
-        reply = "Bạn có thể liên hệ trực tiếp qua số điện thoại hoặc Zalo: <b>0399.232.692</b> nha!";
+        reply = "Bạn có thể liên hệ trực tiếp qua số điện thoại hoặc Zalo: <b>0869.824.868</b> nha!";
     }
 
     appendMessage(reply, 'bot');
