@@ -326,7 +326,7 @@ function botReply(userMsg) {
         reply = "Chào bạn! Mình có thể giúp gì cho bạn hôm nay?";
     } else if (lowerMsg.includes("giá") || lowerMsg.includes("bao nhiêu")) {
         reply = "Giá các loại dầu nhớt bên mình dao động tùy theo thương hiệu và dung tích. Bạn có thể vào mục <b>Sản Phẩm</b> để xem chi tiết giá nhé!";
-    } else if (lowerMsg.includes("menu") || lowerMsg.includes("thực đơn") || lowerMsg.includes("có món gì") || lowerMsg.includes("sản phẩm")) {
+    } else if (lowerMsg.includes("menu") || lowerMsg.includes("thực đơn") || lowerMsg.includes("có sản phẩm gì") || lowerMsg.includes("sản phẩm")) {
         reply = "Bên mình chuyên các loại dầu nhớt xe máy, ô tô, mỡ bò và phụ gia từ Castrol, Motul, Shell... Bạn có thể nhấn vào mục Sản Phẩm để xem chi tiết nhé!";
     } else if (lowerMsg.includes("địa chỉ") || lowerMsg.includes("ở đâu") || lowerMsg.includes("cửa hàng")) {
         reply = "Cửa hàng hiện đang giao hàng tận nơi tại khu vực Khánh Hòa. Bạn có muốn đặt mua dầu nhớt không ạ?";

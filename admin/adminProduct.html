@@ -126,7 +126,7 @@
                 </a>
                 <button onclick="openFormModal()"
                     class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg shadow-md transition font-semibold">
-                    + Thêm món mới
+                    + Thêm sản phẩm mới
                 </button>
             </div>
         </div>
@@ -148,9 +148,9 @@
                     <span class="text-sm font-bold text-gray-500 uppercase">Hiển thị:</span>
                     <select id="pageSize"
                         class="border border-gray-200 p-2 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-orange-400 outline-none">
-                        <option value="10">10 món</option>
-                        <option value="20">20 món</option>
-                        <option value="50">50 món</option>
+                        <option value="10">10 sản phẩm</option>
+                        <option value="20">20 sản phẩm</option>
+                        <option value="50">50 sản phẩm</option>
                     </select>
                 </div>
             </div>
@@ -187,7 +187,7 @@
             <div id="paginationFooter"
                 class="bg-gray-50 p-4 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div id="pageInfo" class="text-sm text-gray-500 font-medium italic">
-                    Hiển thị 0 trên 0 món
+                    Hiển thị 0 trên 0 sản phẩm
                 </div>
                 <div class="flex items-center gap-2">
                     <button id="btnPrev"
@@ -212,7 +212,7 @@
         <div
             class="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl scale-up animate-in fade-in duration-300 max-h-[90vh] overflow-y-auto">
             <div class="bg-orange-500 p-5 text-white flex justify-between items-center sticky top-0 z-10">
-                <h3 id="modalTitle" class="text-xl font-bold">Thêm món mới</h3>
+                <h3 id="modalTitle" class="text-xl font-bold">Thêm sản phẩm mới</h3>
                 <button onclick="closeFormModal()"
                     class="text-3xl font-light hover:rotate-90 transition-transform">&times;</button>
             </div>
@@ -221,7 +221,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">ID (Mã món)</label>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">ID (Mã sản phẩm)</label>
                         <input type="text" id="pId" required placeholder="ca-phe-sua"
                             class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all">
                     </div>
@@ -247,7 +247,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nhóm đồ uống</label>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nhóm sản phẩm</label>
                         <select id="pCategory"
                             class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all">
                             <!-- Danh mục sẽ được tải từ Firebase -->
@@ -294,7 +294,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Mô tả món</label>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Mô tả sản phẩm</label>
                     <textarea id="pDesc" placeholder="Hương vị thế nào..."
                         class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all h-20 resize-none"></textarea>
                 </div>
@@ -365,7 +365,7 @@
             updateCategoryDropdowns();
         }, (error) => console.error("Lỗi tải danh mục: ", error));
 
-        // Cập nhật giao diện 2 ô Select (Lọc và Thêm món)
+        // Cập nhật giao diện 2 ô Select (Lọc và Thêm sản phẩm)
         function updateCategoryDropdowns() {
             const filterSelect = document.getElementById('filterCategory');
             const formSelect = document.getElementById('pCategory');
@@ -457,7 +457,7 @@
         }
 
         function renderPagination(total, totalPages) {
-            document.getElementById('pageInfo').innerText = `Hiển thị món ${filteredProducts.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} - ${Math.min(currentPage * pageSize, total)} trong tổng số ${total} món`;
+            document.getElementById('pageInfo').innerText = `Hiển thị sản phẩm ${filteredProducts.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} - ${Math.min(currentPage * pageSize, total)} trong tổng số ${total} sản phẩm`;
             document.getElementById('btnPrev').disabled = (currentPage === 1);
             document.getElementById('btnNext').disabled = (currentPage === totalPages);
 
@@ -595,7 +595,7 @@
 
         window.requestDelete = (id, name) => {
             currentDeleteId = id;
-            document.getElementById('confirmText').innerText = `Xóa món "${name}"? Thao tác này sẽ xóa vĩnh viễn khỏi mây (Cloud).`;
+            document.getElementById('confirmText').innerText = `Xóa sản phẩm "${name}"? Thao tác này sẽ xóa vĩnh viễn khỏi mây (Cloud).`;
             document.getElementById('confirmModal').classList.remove('hidden');
         };
 
@@ -661,7 +661,7 @@
                         throw new Error("File JSON phải chứa một mảng (bắt đầu bằng [ và kết thúc bằng ])");
                     }
 
-                    showStatus(`Đang xử lý ${data.length} món. Vui lòng đợi...`, "bg-blue-500 text-white");
+                    showStatus(`Đang xử lý ${data.length} sản phẩm. Vui lòng đợi...`, "bg-blue-500 text-white");
 
                     const currentUser = sessionStorage.getItem('loggedInName') || 'Admin';
                     const currentTime = new Date().toISOString();
@@ -679,12 +679,12 @@
                         if (!item.DateCreate) item.DateCreate = currentTime;
                         if (!item.userCreate) item.userCreate = currentUser;
 
-                        // setDoc với merge: true để cập nhật đè lên món có sẵn, hoặc thêm mới
+                        // setDoc với merge: true để cập nhật đè lên sản phẩm có sẵn, hoặc thêm mới
                         await setDoc(doc(db, "products", String(item.id)), item, { merge: true });
                         successCount++;
                     }
 
-                    showStatus(`Đã nhập thành công ${successCount} món!`, "bg-green-500 text-white");
+                    showStatus(`Đã nhập thành công ${successCount} sản phẩm!`, "bg-green-500 text-white");
                 } catch (error) {
                     showStatus("Lỗi file JSON: " + error.message, "bg-red-500 text-white");
                 }
