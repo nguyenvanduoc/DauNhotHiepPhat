@@ -112,7 +112,8 @@
                     </div>
                 </div> -->
 
-                <svg width="280" height="70" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg">
+                <svg width="280" height="70" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg"
+                    class="cursor-pointer" onclick="navigate('index')">
                     <g transform="translate(10, 5) skewX(-10)">
                         <path d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
                             fill="#00b140" />
@@ -334,9 +335,22 @@
         <div
             class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
             <div>
-                <div class="flex items-center justify-center md:justify-start mb-6">
-                    <i class="fa-solid fa-oil-can text-3xl mr-3 text-castrol-400"></i>
-                    <span class="font-heading font-black text-2xl text-white uppercase tracking-wider">Hiệp Phát</span>
+                <div class="flex items-center justify-center md:justify-start mb-6 -ml-4 cursor-pointer"
+                    onclick="navigate('index')">
+                    <svg width="240" height="60" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(10, 5) skewX(-10)">
+                            <path d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
+                                fill="#00b140" />
+                            <path
+                                d="M 25 20 C 31 30 34 38 34 45 C 34 50 30 55 25 55 C 20 55 16 50 16 45 C 16 38 19 30 25 20 Z"
+                                fill="#e31837" />
+                            <circle cx="18" cy="42" r="2" fill="#ffffff" opacity="0.8" />
+                        </g>
+                        <text x="75" y="40" font-family="'Roboto', sans-serif" font-weight="900" font-size="34"
+                            fill="#ffffff" font-style="italic">HIỆP PHÁT</text>
+                        <text x="78" y="60" font-family="'Roboto', sans-serif" font-weight="900" font-size="14"
+                            fill="#e31837" letter-spacing="3" font-style="italic">LUBRICANTS</text>
+                    </svg>
                 </div>
                 <p class="text-sm leading-relaxed mb-4" id="footer-desc">Dầu Nhớt Hiệp Phát - Tự hào mang đến các sản
                     phẩm dầu nhớt chất lượng cao, giúp bảo vệ và tối ưu hiệu suất cho mọi loại động cơ.<br />Liên hệ :
