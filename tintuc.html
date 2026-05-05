@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức - Dầu Nhớt Hiệp Phát | Đại Lý Castrol Chính Hãng</title>
+    <meta name="description"
+        content="Cập nhật tin tức mới nhất về dầu nhớt, kiến thức bảo dưỡng xe và các chương trình khuyến mãi từ Dầu Nhớt Hiệp Phát.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto:wght@700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        heading: ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        castrol: {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0',
+                            300: '#86efac', 400: '#4ade80', 500: '#22c55e',
+                            600: '#16a34a', 700: '#00b140',
+                            800: '#166534', 900: '#14532d',
+                            red: '#e31837', dark: '#111111'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-heading {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <!-- Navigation Header -->
+    <header class="bg-white/95 backdrop-blur-md shadow-md sticky top-0 z-50 border-b-4 border-castrol-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="no-underline">
+                    <svg width="280" height="70" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg"
+                        class="cursor-pointer" onclick="navigate('index')">
+                        <defs>
+                            <!-- Dải màu gradient vàng đồng cho giọt dầu -->
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FCE152" />
+                                <stop offset="50%" stop-color="#D99F16" />
+                                <stop offset="100%" stop-color="#9A6B0A" />
+                            </linearGradient>
+
+                            <!-- Mặt nạ (Mask) để đục lỗ bên trong hình giọt dầu và tạo răng cưa -->
+                            <mask id="gearMask">
+                                <!-- Nền trắng giữ lại toàn bộ hình -->
+                                <rect x="-10" y="-10" width="100" height="100" fill="white" />
+
+                                <!-- Hình giọt nước nhỏ màu đen để đục lỗ bên trong -->
+                                <path
+                                    d="M 27 15 C 37 28 40 38 40 45 C 40 52 34 58 27 58 C 20 58 14 52 14 45 C 14 38 17 28 27 15 Z"
+                                    fill="black" />
+
+                                <!-- Các răng cưa màu trắng để khôi phục lại phần màu vàng hướng vào trong lỗ đục -->
+                                <g transform="translate(27, 45)">
+                                    <g transform="rotate(-45)">
+                                        <polygon points="7,-1.5 15,-2.5 15,2.5 7,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(-22)">
+                                        <polygon points="6.5,-1.5 15,-2.5 15,2.5 6.5,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(0)">
+                                        <polygon points="6,-1.5 15,-2.5 15,2.5 6,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(22)">
+                                        <polygon points="6.5,-1.5 15,-2.5 15,2.5 6.5,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(45)">
+                                        <polygon points="7,-1.5 15,-2.5 15,2.5 7,1.5" fill="white" />
+                                    </g>
+                                </g>
+                            </mask>
+                        </defs>
+
+                        <!-- Biểu tượng giọt dầu bánh răng đã được làm mới -->
+                        <g transform="translate(15, 2)">
+                            <path
+                                d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
+                                fill="url(#goldGrad)" mask="url(#gearMask)" />
+                        </g>
+
+                        <!-- Text được sử dụng lại hoàn toàn từ code cũ của bạn -->
+                        <text x="75" y="40" font-family="'Roboto', sans-serif" font-weight="900" font-size="34"
+                            fill="#111111" font-style="italic">HIỆP PHÁT</text>
+                        <text x="78" y="60" font-family="'Roboto', sans-serif" font-weight="900" font-size="14"
+                            fill="#e31837" letter-spacing="3" font-style="italic">LUBRICANTS</text>
+                    </svg>
+                </a>
+
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html"
+                        class="text-gray-800 hover:text-castrol-700 font-bold transition-colors no-underline">Trang
+                        Chủ</a>
+                    <a href="index.html?view=list"
+                        class="text-gray-800 hover:text-castrol-700 font-bold transition-colors no-underline">Sản
+                        Phẩm</a>
+                    <a href="introduce.html"
+                        class="text-gray-800 hover:text-castrol-700 font-bold transition-colors no-underline">Giới
+                        Thiệu</a>
+                    <a href="tintuc.html" class="text-castrol-700 font-bold transition-colors no-underline">Tin Tức</a>
+                </nav>
+
+                <div class="hidden md:flex">
+                    <a href="https://zalo.me/0869824868" target="_blank"
+                        class="bg-castrol-red hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold transition-all shadow-md no-underline">Liên
+                        Hệ Ngay</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        class="text-gray-800 hover:text-castrol-700 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-gray-100 pb-4 shadow-lg absolute w-full z-40">
+            <a href="index.html"
+                class="block w-full text-left px-6 py-3 text-gray-800 hover:bg-castrol-50 hover:text-castrol-700 font-bold no-underline">Trang
+                Chủ</a>
+            <a href="index.html?view=list"
+                class="block w-full text-left px-6 py-3 text-gray-800 hover:bg-castrol-50 hover:text-castrol-700 font-bold no-underline">Sản
+                Phẩm</a>
+            <a href="introduce.html"
+                class="block w-full text-left px-6 py-3 text-gray-800 hover:bg-castrol-50 hover:text-castrol-700 font-bold no-underline">Giới
+                Thiệu</a>
+            <a href="tintuc.html"
+                class="block w-full text-left px-6 py-3 text-castrol-700 bg-castrol-50 font-bold no-underline">Tin
+                Tức</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <div id="view-list" class="block">
+            <!-- Hero Banner -->
+            <section class="relative bg-castrol-dark text-white overflow-hidden py-20 md:py-28">
+                <img src="https://images.unsplash.com/photo-1503376712351-1e2df80753bb?auto=format&fit=crop&w=1600&q=80"
+                    alt="News Background"
+                    class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay">
+                <div class="absolute inset-0 bg-gradient-to-r from-castrol-900/90 to-transparent"></div>
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <span class="text-castrol-400 font-bold tracking-widest uppercase mb-4 block">Tin tức & Sự
+                        kiện</span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-black mb-6 uppercase">Cập nhật thông
+                        tin <br /><span class="text-castrol-400">mới nhất</span></h1>
+                    <div class="w-24 h-1.5 bg-castrol-red mb-6 rounded"></div>
+                    <p class="text-lg md:text-xl text-gray-200 max-w-2xl">Kiến thức bảo dưỡng động cơ, thông tin thị
+                        trường dầu nhớt và các chương trình khuyến mãi hấp dẫn từ Hiệp Phát.</p>
+                </div>
+            </section>
+
+            <section class="py-12 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-8">
+
+                    <!-- Sidebar -->
+                    <div class="md:w-1/4 w-full">
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-28">
+                            <h3
+                                class="font-heading font-bold text-xl text-gray-900 mb-4 uppercase border-l-4 border-castrol-700 pl-3">
+                                Danh Mục</h3>
+                            <ul class="space-y-2" id="category-sidebar">
+                                <li><button onclick="filterNews('Tất cả', this)"
+                                        class="category-filter text-left w-full px-4 py-2 rounded-lg font-bold bg-castrol-50 text-castrol-700 transition-colors">Tất
+                                        cả bài viết</button></li>
+                                <li class="text-gray-400 text-sm py-2 px-4 italic animate-pulse">Đang tải danh mục...
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- News Grid -->
+                    <div class="md:w-3/4 w-full">
+                        <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Loading State -->
+                            <div class="col-span-full py-10 text-center text-gray-500">
+                                <i class="fa-solid fa-spinner fa-spin text-3xl text-castrol-700 mb-3"></i>
+                                <p>Đang tải tin tức...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <div id="view-detail" class="hidden">
+            <section class="py-12 bg-gray-50 min-h-screen">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <button onclick="closeNewsModal()"
+                        class="text-gray-500 hover:text-castrol-700 font-bold mb-8 flex items-center transition-colors">
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Trở lại danh sách tin tức
+                    </button>
+
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                        <img id="detail-image" src="" alt="News Banner" class="w-full h-64 md:h-96 object-cover">
+                        <div class="p-8 md:p-12">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span id="detail-category"
+                                    class="bg-castrol-50 text-castrol-700 px-3 py-1 text-sm font-bold rounded-full uppercase"></span>
+                                <span id="detail-date" class="text-gray-500 text-sm"><i
+                                        class="fa-regular fa-calendar mr-1"></i> </span>
+                            </div>
+                            <h2 id="detail-title"
+                                class="text-3xl md:text-5xl font-heading font-black text-gray-900 mb-6 leading-tight">
+                            </h2>
+                            <div class="w-16 h-1 bg-castrol-red mb-8 rounded"></div>
+                            <div id="detail-content"
+                                class="prose prose-lg prose-green max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
+                                <!-- Content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-16 border-t-4 border-castrol-700 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+            <div>
+                <div class="flex items-center justify-center md:justify-start mb-6 -ml-4">
+                    <a href="index.html" class="no-underline">
+                        <svg width="240" height="60" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(10, 5) skewX(-10)">
+                                <path
+                                    d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
+                                    fill="#00b140" />
+                                <path
+                                    d="M 25 20 C 31 30 34 38 34 45 C 34 50 30 55 25 55 C 20 55 16 50 16 45 C 16 38 19 30 25 20 Z"
+                                    fill="#e31837" />
+                                <circle cx="18" cy="42" r="2" fill="#ffffff" opacity="0.8" />
+                            </g>
+                            <text x="75" y="40" font-family="'Roboto', sans-serif" font-weight="900" font-size="34"
+                                fill="#ffffff" font-style="italic">HIỆP PHÁT</text>
+                            <text x="78" y="60" font-family="'Roboto', sans-serif" font-weight="900" font-size="14"
+                                fill="#e31837" letter-spacing="3" font-style="italic">LUBRICANTS</text>
+                        </svg>
+                    </a>
+                </div>
+                <p class="text-sm leading-relaxed mb-4">Dầu Nhớt Hiệp Phát - Tự hào mang đến các sản phẩm dầu nhớt chất
+                    lượng cao, giúp bảo vệ và tối ưu hiệu suất cho mọi loại động cơ.<br />Liên hệ : 0869.824.868 Zalo /
+                    Phone.</p>
+                <p class="text-sm font-bold text-white"><i
+                        class="fa-solid fa-location-dot mr-2 text-castrol-red"></i>Ninh Phước, Ninh Thuận</p>
+            </div>
+            <div>
+                <h4
+                    class="text-white font-bold mb-6 uppercase text-sm tracking-widest border-l-4 border-castrol-red pl-2">
+                    Đường Dẫn</h4>
+                <ul class="space-y-3">
+                    <li><a href="index.html"
+                            class="hover:text-castrol-400 transition-colors font-medium no-underline">Trang Chủ</a></li>
+                    <li><a href="index.html?view=list"
+                            class="hover:text-castrol-400 transition-colors font-medium no-underline">Sản Phẩm</a></li>
+                    <li><a href="introduce.html"
+                            class="hover:text-castrol-400 transition-colors font-medium no-underline">Về Chúng Tôi</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h4
+                    class="text-white font-bold mb-6 uppercase text-sm tracking-widest border-l-4 border-castrol-red pl-2">
+                    Liên Hệ & Kết Nối</h4>
+                <div class="space-y-4 mb-6">
+                    <p class="text-white font-bold text-xl"><i class="fa-solid fa-phone text-castrol-400 mr-2"></i>
+                        0869.824.868</p>
+                </div>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="https://www.facebook.com/hiepphatphanrang" target="_blank"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors text-white">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://zalo.me/0869824868" target="_blank"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors text-white font-bold text-sm">Z</a>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
+            &copy; 2024 Dầu Nhớt Hiệp Phát. Cung cấp sỉ lẻ dầu nhớt Ninh Thuận.
+        </div>
+    </footer>
+
+    <!-- Firebase Logic -->
+    <script type="module">
+        import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { db } from "./firebaseConfig.js";
+
+        let allNewsData = [];
+        let allCategories = [];
+        let currentFilter = "Tất cả";
+
+        const newsGrid = document.getElementById('news-grid');
+        const categorySidebar = document.getElementById('category-sidebar');
+
+        // Load Categories Realtime
+        onSnapshot(collection(db, "news_categories"), (snapshot) => {
+            allCategories = [];
+            snapshot.forEach(doc => allCategories.push({ id: doc.id, ...doc.data() }));
+            allCategories.sort((a, b) => (a.order || 0) - (b.order || 0));
+            renderCategories();
+        });
+
+        function renderCategories() {
+            let html = `<li><button onclick="filterNews('Tất cả', this)" class="category-filter text-left w-full px-4 py-2 rounded-lg ${currentFilter === 'Tất cả' ? 'font-bold bg-castrol-50 text-castrol-700' : 'font-medium text-gray-600 hover:bg-gray-50 hover:text-castrol-700'} transition-colors">Tất cả bài viết</button></li>`;
+
+            allCategories.forEach(cat => {
+                const isActive = currentFilter === cat.name;
+                const activeClass = isActive ? 'font-bold bg-castrol-50 text-castrol-700' : 'font-medium text-gray-600 hover:bg-gray-50 hover:text-castrol-700';
+                html += `<li><button onclick="filterNews('${cat.name}', this)" class="category-filter text-left w-full px-4 py-2 rounded-lg ${activeClass} transition-colors">${cat.name}</button></li>`;
+            });
+
+            if (categorySidebar) categorySidebar.innerHTML = html;
+        }
+
+        // Mẫu dữ liệu fallback nếu Firebase rỗng
+        const dummyNews = [
+            { id: "1", title: "Tại sao nên thay dầu nhớt định kỳ cho xe máy?", category: "Kiến thức", date: "2024-03-15", image: "https://images.unsplash.com/photo-1635811760636-6e9f5ed5d9c2?auto=format&fit=crop&w=600", summary: "Thay dầu nhớt định kỳ không chỉ giúp động cơ hoạt động trơn tru mà còn kéo dài tuổi thọ của xe. Cùng tìm hiểu chi tiết...", content: "Động cơ xe máy cần được bôi trơn liên tục...", featured: true },
+            { id: "2", title: "Khuyến mãi lớn tháng 4: Mua Castrol Power1 tặng quà hấp dẫn", category: "Khuyến mãi", date: "2024-04-01", image: "https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?auto=format&fit=crop&w=600", summary: "Chương trình khuyến mãi lớn nhất trong năm khi mua sản phẩm dầu nhớt Castrol Power1. Đừng bỏ lỡ!", content: "Chi tiết chương trình khuyến mãi...", featured: false }
+        ];
+
+        onSnapshot(collection(db, "news"), (snapshot) => {
+            allNewsData = [];
+            snapshot.forEach(doc => allNewsData.push({ id: doc.id, ...doc.data() }));
+
+            allNewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Nếu không có dữ liệu thật, dùng dữ liệu mẫu để hiển thị
+            if (allNewsData.length === 0) allNewsData = dummyNews;
+
+            renderNews();
+
+            // Kiểm tra link trực tiếp vào bài viết
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                openNewsDetail(id, false);
+            }
+        });
+
+        window.filterNews = (category, btnElement) => {
+            currentFilter = category;
+
+            // Update active style cho sidebar buttons
+            const buttons = document.querySelectorAll('.category-filter');
+            buttons.forEach(btn => {
+                btn.className = 'category-filter text-left w-full px-4 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-castrol-700 transition-colors';
+            });
+            btnElement.className = 'category-filter text-left w-full px-4 py-2 rounded-lg font-bold bg-castrol-50 text-castrol-700 transition-colors';
+
+            renderNews();
+        };
+
+        function renderNews() {
+            let filtered = currentFilter === "Tất cả" ? allNewsData : allNewsData.filter(n => n.category === currentFilter);
+
+            if (filtered.length === 0) {
+                newsGrid.innerHTML = `<div class="col-span-full py-12 text-center bg-white rounded-2xl border border-gray-100">
+                    <i class="fa-regular fa-newspaper text-5xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 font-medium">Chưa có bài viết nào trong chuyên mục này.</p>
+                </div>`;
+                return;
+            }
+
+            newsGrid.innerHTML = filtered.map(news => {
+                let dateStr = news.date;
+                try { dateStr = new Date(news.date).toLocaleDateString('vi-VN'); } catch (e) { }
+
+                return `
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full cursor-pointer" onclick="openNewsDetail('${news.id}')">
+                    <div class="relative h-48 overflow-hidden bg-gray-100">
+                        <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=News'">
+                        <div class="absolute top-4 left-4 bg-castrol-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase shadow-md">${news.category}</div>
+                        ${news.featured ? '<div class="absolute top-4 right-4 bg-castrol-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase shadow-md"><i class="fa-solid fa-fire mr-1"></i> Hot</div>' : ''}
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center text-xs text-gray-500 mb-3">
+                            <i class="fa-regular fa-calendar mr-2 text-castrol-700"></i> ${dateStr}
+                        </div>
+                        <h3 class="text-xl font-heading font-bold text-gray-900 mb-3 group-hover:text-castrol-700 transition-colors line-clamp-2">${news.title}</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">${news.summary || 'Click để xem chi tiết bài viết...'}</p>
+                        <div class="mt-auto pt-4 border-t border-gray-50 flex items-center text-castrol-700 font-bold text-sm">
+                            Xem chi tiết <i class="fa-solid fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        window.openNewsDetail = (id, addToHistory = true) => {
+            const news = allNewsData.find(n => n.id === id);
+            if (!news) return;
+
+            document.getElementById('detail-image').src = news.image;
+            document.getElementById('detail-category').innerText = news.category;
+
+            let dateStr = news.date;
+            try { dateStr = new Date(news.date).toLocaleDateString('vi-VN'); } catch (e) { }
+            document.getElementById('detail-date').innerHTML = `<i class="fa-regular fa-calendar mr-1"></i> ${dateStr}`;
+
+            document.getElementById('detail-title').innerText = news.title;
+            document.getElementById('detail-content').innerHTML = (news.content || "").replace(/\n/g, '<br/>');
+
+            document.getElementById('view-list').classList.remove('block');
+            document.getElementById('view-list').classList.add('hidden');
+
+            document.getElementById('view-detail').classList.remove('hidden');
+            document.getElementById('view-detail').classList.add('block');
+
+            window.scrollTo(0, 0);
+
+            if (addToHistory) {
+                history.pushState({ newsId: id }, '', '?id=' + id);
+            }
+        };
+
+        window.closeNewsModal = (addToHistory = true) => {
+            document.getElementById('view-detail').classList.remove('block');
+            document.getElementById('view-detail').classList.add('hidden');
+
+            document.getElementById('view-list').classList.remove('hidden');
+            document.getElementById('view-list').classList.add('block');
+
+            window.scrollTo(0, 0);
+
+            if (addToHistory) {
+                history.pushState(null, '', window.location.pathname);
+            }
+        };
+
+        window.addEventListener('popstate', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                openNewsDetail(id, false);
+            } else {
+                closeNewsModal(false);
+            }
+        });
+    </script>
+</body>
+
+</html>

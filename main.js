@@ -49,12 +49,12 @@ onSnapshot(doc(db, "settings", "introduce"), (docSnap) => {
         }
 
         if (contact) {
-            const cleanPhone = contact.replace(/\D/g, '');
-            if (cleanPhone) {
-                if (footerZalo) footerZalo.href = `https://id.zalo.me/${cleanPhone}`;
-                if (modalZalo) modalZalo.href = `https://id.zalo.me/${cleanPhone}`;
-                if (modalPhone) modalPhone.href = `tel:${cleanPhone}`;
-            }
+            // Lấy số điện thoại 10 chữ số đầu tiên (tránh ghép nhiều số)
+            const phoneMatch = contact.match(/0\d{9}/);
+            const cleanPhone = phoneMatch ? phoneMatch[0] : '0869824868';
+            if (footerZalo) footerZalo.href = `https://zalo.me/${cleanPhone}`;
+            if (modalZalo) modalZalo.href = `https://zalo.me/${cleanPhone}`;
+            if (modalPhone) modalPhone.href = `tel:${cleanPhone}`;
         }
     }
 });

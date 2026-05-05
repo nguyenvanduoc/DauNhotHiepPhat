@@ -110,15 +110,55 @@
                     </div>
                 </a> -->
                 <a href="index.html" class="no-underline">
-                    <svg width="280" height="70" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg">
-                        <g transform="translate(10, 5) skewX(-10)">
-                            <path d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
-                                fill="#00b140" />
+                    <svg width="280" height="70" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg"
+                        class="cursor-pointer" onclick="navigate('index')">
+                        <defs>
+                            <!-- Dải màu gradient vàng đồng cho giọt dầu -->
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FCE152" />
+                                <stop offset="50%" stop-color="#D99F16" />
+                                <stop offset="100%" stop-color="#9A6B0A" />
+                            </linearGradient>
+
+                            <!-- Mặt nạ (Mask) để đục lỗ bên trong hình giọt dầu và tạo răng cưa -->
+                            <mask id="gearMask">
+                                <!-- Nền trắng giữ lại toàn bộ hình -->
+                                <rect x="-10" y="-10" width="100" height="100" fill="white" />
+
+                                <!-- Hình giọt nước nhỏ màu đen để đục lỗ bên trong -->
+                                <path
+                                    d="M 27 15 C 37 28 40 38 40 45 C 40 52 34 58 27 58 C 20 58 14 52 14 45 C 14 38 17 28 27 15 Z"
+                                    fill="black" />
+
+                                <!-- Các răng cưa màu trắng để khôi phục lại phần màu vàng hướng vào trong lỗ đục -->
+                                <g transform="translate(27, 45)">
+                                    <g transform="rotate(-45)">
+                                        <polygon points="7,-1.5 15,-2.5 15,2.5 7,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(-22)">
+                                        <polygon points="6.5,-1.5 15,-2.5 15,2.5 6.5,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(0)">
+                                        <polygon points="6,-1.5 15,-2.5 15,2.5 6,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(22)">
+                                        <polygon points="6.5,-1.5 15,-2.5 15,2.5 6.5,1.5" fill="white" />
+                                    </g>
+                                    <g transform="rotate(45)">
+                                        <polygon points="7,-1.5 15,-2.5 15,2.5 7,1.5" fill="white" />
+                                    </g>
+                                </g>
+                            </mask>
+                        </defs>
+
+                        <!-- Biểu tượng giọt dầu bánh răng đã được làm mới -->
+                        <g transform="translate(15, 2)">
                             <path
-                                d="M 25 20 C 31 30 34 38 34 45 C 34 50 30 55 25 55 C 20 55 16 50 16 45 C 16 38 19 30 25 20 Z"
-                                fill="#e31837" />
-                            <circle cx="18" cy="42" r="2" fill="#ffffff" opacity="0.8" />
+                                d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
+                                fill="url(#goldGrad)" mask="url(#gearMask)" />
                         </g>
+
+                        <!-- Text được sử dụng lại hoàn toàn từ code cũ của bạn -->
                         <text x="75" y="40" font-family="'Roboto', sans-serif" font-weight="900" font-size="34"
                             fill="#111111" font-style="italic">HIỆP PHÁT</text>
                         <text x="78" y="60" font-family="'Roboto', sans-serif" font-weight="900" font-size="14"
@@ -135,6 +175,9 @@
                         Phẩm</a>
                     <a href="introduce.html" class="text-castrol-700 font-bold transition-colors no-underline">Giới
                         Thiệu</a>
+                    <a href="tintuc.html"
+                        class="text-gray-800 hover:text-castrol-700 font-bold transition-colors no-underline">Tin
+                        Tức</a>
                 </nav>
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center">
@@ -157,6 +200,9 @@
             <a href="introduce.html"
                 class="block w-full text-left px-6 py-3 text-castrol-700 bg-castrol-50 font-bold no-underline">Giới
                 Thiệu</a>
+            <a href="tintuc.html"
+                class="block w-full text-left px-6 py-3 text-gray-800 hover:bg-castrol-50 hover:text-castrol-700 font-bold no-underline">Tin
+                Tức</a>
         </div>
     </header>
 
@@ -266,7 +312,8 @@
                     <a href="index.html" class="no-underline">
                         <svg width="240" height="60" viewBox="0 0 280 70" xmlns="http://www.w3.org/2000/svg">
                             <g transform="translate(10, 5) skewX(-10)">
-                                <path d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
+                                <path
+                                    d="M 25 0 C 40 20 45 35 45 45 C 45 56 36 65 25 65 C 14 65 5 56 5 45 C 5 35 10 20 25 0 Z"
                                     fill="#00b140" />
                                 <path
                                     d="M 25 20 C 31 30 34 38 34 45 C 34 50 30 55 25 55 C 20 55 16 50 16 45 C 16 38 19 30 25 20 Z"
@@ -298,6 +345,9 @@
                     <li><a href="introduce.html"
                             class="hover:text-castrol-400 transition-colors font-medium no-underline">Về Chúng Tôi</a>
                     </li>
+                    <li><a href="tintuc.html"
+                            class="hover:text-castrol-400 transition-colors font-medium no-underline">Tin Tức</a>
+                    </li>
                 </ul>
             </div>
             <div>
@@ -313,7 +363,7 @@
                         class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors text-white">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
-                    <a href="https://id.zalo.me/0869824868" target="_blank"
+                    <a href="https://zalo.me/0869824868" target="_blank"
                         class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors text-white font-bold text-sm">
                         Z
                     </a>
@@ -418,9 +468,9 @@
                     const contactContainer = document.getElementById('introContactContainer');
                     const contactLinkEl = document.getElementById('introContactLink');
                     if (contact) {
-                        const cleanPhone = contact.replace(/\D/g, '');
+                        const cleanPhone = contact.match(/0\d{9}/)?.[0] || '0869824868';
                         if (cleanPhone) {
-                            contactLinkEl.href = `https://id.zalo.me/${cleanPhone}`;
+                            contactLinkEl.href = `https://zalo.me/${cleanPhone}`;
                         }
                         contactLinkEl.innerText = contact;
                         contactContainer.classList.remove('hidden');

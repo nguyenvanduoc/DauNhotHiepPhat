@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Tin Tức - Dầu Nhớt Hiệp Phát</title>
+    <script>
+        if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace("login.html");
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 10px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div
+            class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <div class="flex items-center gap-4">
+                <div class="bg-orange-500 p-3 rounded-lg text-white">
+                    <i class="fa-solid fa-newspaper text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Hiệp Phát Admin</h1>
+                    <p class="text-gray-500 text-sm">Quản lý Tin tức & Bài viết</p>
+                </div>
+            </div>
+            <div class="mt-4 md:mt-0 flex flex-wrap gap-2 justify-end">
+                <a href="adminProduct.html"
+                    class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-lg transition font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-box"></i> QL Sản Phẩm
+                </a>
+                <a href="adminNewsCategory.html"
+                    class="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 px-4 py-2 rounded-lg transition font-semibold border border-emerald-200 flex items-center gap-2">
+                    <i class="fa-solid fa-tags"></i> QL Danh Mục Tin
+                </a>
+                <button onclick="openFormModal()"
+                    class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg shadow-md transition font-semibold">
+                    + Thêm bài viết mới
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter & Pagination Controls -->
+        <div
+            class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <span class="text-sm font-bold text-gray-500 uppercase">Lọc danh mục:</span>
+                <select id="filterCategory"
+                    class="border border-gray-200 p-2 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-orange-400 outline-none min-w-[150px]">
+                    <option value="Tất cả">Tất cả bài viết</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-4 w-full md:w-auto justify-end">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold text-gray-500 uppercase">Hiển thị:</span>
+                    <select id="pageSize"
+                        class="border border-gray-200 p-2 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-orange-400 outline-none">
+                        <option value="10">10 bài viết</option>
+                        <option value="20">20 bài viết</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Message -->
+        <div id="statusBox" class="hidden mb-6 p-4 rounded-xl text-center font-medium shadow-sm border animate-pulse">
+        </div>
+
+        <!-- Table View -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-50 border-b border-gray-100">
+                        <tr>
+                            <th class="p-5 text-xs font-bold text-gray-400 uppercase tracking-wider">Ảnh</th>
+                            <th class="p-5 text-xs font-bold text-gray-400 uppercase tracking-wider">Tiêu đề</th>
+                            <th class="p-5 text-xs font-bold text-gray-400 uppercase tracking-wider">Danh mục</th>
+                            <th class="p-5 text-xs font-bold text-gray-400 uppercase tracking-wider">Ngày đăng</th>
+                            <th class="p-5 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Thao
+                                tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="newsTableBody" class="divide-y divide-gray-50">
+                        <tr>
+                            <td colspan="5" class="p-10 text-center text-gray-400 italic">Đang đồng bộ dữ liệu...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Controls Footer -->
+            <div id="paginationFooter"
+                class="bg-gray-50 p-4 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div id="pageInfo" class="text-sm text-gray-500 font-medium italic">Hiển thị 0 trên 0 bài viết</div>
+                <div class="flex items-center gap-2">
+                    <button id="btnPrev"
+                        class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition">Trang
+                        trước</button>
+                    <div id="pageNumbers" class="flex gap-1"></div>
+                    <button id="btnNext"
+                        class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-600 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition">Trang
+                        sau</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form (Thêm/Sửa) -->
+    <div id="newsModal"
+        class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div
+            class="bg-white rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl scale-up animate-in fade-in duration-300 max-h-[90vh] flex flex-col">
+            <div class="bg-orange-500 p-5 text-white flex justify-between items-center sticky top-0 z-10 shrink-0">
+                <h3 id="modalTitle" class="text-xl font-bold">Thêm bài viết mới</h3>
+                <button onclick="closeFormModal()"
+                    class="text-3xl font-light hover:rotate-90 transition-transform">&times;</button>
+            </div>
+            <form id="newsForm" class="p-8 space-y-5 overflow-y-auto flex-1">
+                <input type="hidden" id="editMode" value="false">
+                <input type="hidden" id="nId" value="">
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Tiêu đề bài viết</label>
+                    <input type="text" id="nTitle" required placeholder="Nhập tiêu đề hấp dẫn..."
+                        class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Danh mục</label>
+                        <select id="nCategory"
+                            class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all">
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Ngày đăng (để trống sẽ lấy
+                            ngày hiện tại)</label>
+                        <input type="date" id="nDate"
+                            class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Hình ảnh bìa</label>
+                    <div class="flex gap-2 items-center">
+                        <input type="file" id="fileUpload" accept="image/*" class="hidden" onchange="uploadImage(this)">
+                        <button type="button" onclick="document.getElementById('fileUpload').click()"
+                            class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-3 rounded-xl text-sm font-bold transition flex-shrink-0 flex items-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Tải ảnh lên
+                        </button>
+                        <input type="text" id="nImage" required placeholder="Hoặc dán link ảnh vào đây..."
+                            class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all text-sm">
+                    </div>
+                    <p id="uploadStatus" class="text-xs mt-1 text-gray-400">Hỗ trợ JPG, PNG. Tối đa 32MB.</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Mô tả ngắn (Summary)</label>
+                    <textarea id="nSummary" required placeholder="Đoạn mô tả ngắn hiển thị ở trang chủ..."
+                        class="w-full border-gray-200 border p-3 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-400 outline-none transition-all h-20 resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nội dung chi tiết</label>
+                    <textarea id="nContent" placeholder="Nội dung bài viết..."></textarea>
+                </div>
+
+                <div class="flex items-center gap-3 p-4 bg-orange-50 rounded-2xl border border-orange-100">
+                    <input type="checkbox" id="nFeatured" class="w-5 h-5 accent-orange-500 rounded cursor-pointer">
+                    <label for="nFeatured" class="text-sm font-semibold text-orange-800 cursor-pointer">Tin nổi
+                        bật</label>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100 shrink-0 mt-4">
+                    <button type="button" onclick="closeFormModal()"
+                        class="px-6 py-3 text-gray-500 font-bold hover:bg-gray-100 rounded-xl transition">Đóng</button>
+                    <button type="submit"
+                        class="px-10 py-3 bg-orange-500 text-white rounded-xl font-bold shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all transform active:scale-95">Lưu
+                        bài viết</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div id="confirmModal"
+        class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-[60] backdrop-blur-sm">
+        <div class="bg-white rounded-3xl w-full max-w-sm p-8 text-center shadow-2xl">
+            <div class="w-20 h-20 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-trash-can text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Xác nhận xóa?</h3>
+            <p id="confirmText" class="text-gray-500 mb-8">Hành động này không thể hoàn tác.</p>
+            <div class="flex gap-3">
+                <button onclick="closeConfirmModal()"
+                    class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition">Hủy</button>
+                <button id="btnConfirmDelete"
+                    class="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-red-600 transition">Xác
+                    nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { collection, onSnapshot, doc, setDoc, deleteDoc, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { db } from "../firebaseConfig.js";
+
+        const newsCol = collection(db, "news");
+        const newsCatCol = collection(db, "news_categories");
+
+        let allNews = [];
+        let allCategories = [];
+        let filteredNews = [];
+        let currentPage = 1;
+        let pageSize = 10;
+        let currentCategory = "Tất cả";
+        let currentDeleteId = null;
+
+        // --- THEO DÕI REALTIME DANH MỤC TIN TỨC ---
+        onSnapshot(newsCatCol, (snapshot) => {
+            allCategories = [];
+            snapshot.forEach(doc => allCategories.push({ id: doc.id, ...doc.data() }));
+            allCategories.sort((a, b) => (a.order || 0) - (b.order || 0));
+            updateCategoryDropdowns();
+        });
+
+        function updateCategoryDropdowns() {
+            const filterSelect = document.getElementById('filterCategory');
+            const formSelect = document.getElementById('nCategory');
+
+            const currentFilter = filterSelect.value;
+            const currentFormVal = formSelect.value;
+
+            filterSelect.innerHTML = '<option value="Tất cả">Tất cả bài viết</option>';
+            formSelect.innerHTML = '';
+
+            allCategories.forEach(cat => {
+                filterSelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+                formSelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+            });
+
+            if (currentFilter) filterSelect.value = currentFilter;
+            if (currentFormVal) formSelect.value = currentFormVal;
+        }
+
+        // --- THEO DÕI REALTIME TIN TỨC ---
+        onSnapshot(newsCol, (snapshot) => {
+            allNews = [];
+            snapshot.forEach(doc => allNews.push({ id: doc.id, ...doc.data() }));
+
+            // Sort by date desc
+            allNews.sort((a, b) => new Date(b.date) - new Date(a.date));
+            applyFilterAndPagination();
+        }, (error) => showStatus("Lỗi Firestore: " + error.message, "bg-red-500 text-white"));
+
+        // --- LỌC & PHÂN TRANG ---
+        function applyFilterAndPagination() {
+            filteredNews = currentCategory === "Tất cả"
+                ? allNews
+                : allNews.filter(n => n.category === currentCategory);
+
+            const totalItems = filteredNews.length;
+            const totalPages = Math.ceil(totalItems / pageSize) || 1;
+
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageData = filteredNews.slice(start, end);
+
+            renderTable(pageData);
+            renderPagination(totalItems, totalPages);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('newsTableBody');
+            tbody.innerHTML = "";
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-10 text-center text-gray-400">Không tìm thấy bài viết nào.</td></tr>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = "fade-in hover:bg-orange-50/30 transition-all";
+
+                // Format Date
+                let formattedDate = item.date;
+                try {
+                    const d = new Date(item.date);
+                    formattedDate = d.toLocaleDateString('vi-VN');
+                } catch (e) { }
+
+                row.innerHTML = `
+                    <td class="p-5">
+                        <img src="${item.image}" class="w-16 h-12 object-cover rounded-lg border border-gray-100 shadow-sm" onerror="this.src='https://placehold.co/100x100?text=News'">
+                    </td>
+                    <td class="p-5">
+                        <div class="font-bold text-gray-800 line-clamp-2">${item.title}</div>
+                        ${item.featured ? '<span class="text-[10px] bg-red-100 text-red-600 px-1 rounded font-bold">Nổi bật</span>' : ''}
+                    </td>
+                    <td class="p-5">
+                        <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded font-bold border border-gray-200">${item.category}</span>
+                    </td>
+                    <td class="p-5 text-gray-500 text-sm">
+                        ${formattedDate}
+                    </td>
+                    <td class="p-5">
+                        <div class="flex justify-center gap-2">
+                            <button onclick="editNews('${item.id}')" class="w-8 h-8 flex items-center justify-center bg-blue-50 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all shadow-sm">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="requestDelete('${item.id}', '${item.title.replace(/'/g, "\\'")}')" class="w-8 h-8 flex items-center justify-center bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderPagination(total, totalPages) {
+            document.getElementById('pageInfo').innerText = `Hiển thị ${filteredNews.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} - ${Math.min(currentPage * pageSize, total)} trong tổng số ${total} bài viết`;
+            document.getElementById('btnPrev').disabled = (currentPage === 1);
+            document.getElementById('btnNext').disabled = (currentPage === totalPages);
+
+            const pageNumbers = document.getElementById('pageNumbers');
+            pageNumbers.innerHTML = "";
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i > 5 && i < totalPages) {
+                    if (i === 6) pageNumbers.innerHTML += `<span class="px-2 text-gray-400">...</span>`;
+                    continue;
+                }
+                const btn = document.createElement('button');
+                btn.className = `w-8 h-8 rounded-lg text-xs font-bold transition ${i === currentPage ? 'bg-orange-500 text-white' : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-100'}`;
+                btn.innerText = i;
+                btn.onclick = () => { currentPage = i; applyFilterAndPagination(); };
+                pageNumbers.appendChild(btn);
+            }
+        }
+
+        document.getElementById('filterCategory').onchange = (e) => { currentCategory = e.target.value; currentPage = 1; applyFilterAndPagination(); };
+        document.getElementById('pageSize').onchange = (e) => { pageSize = Number(e.target.value); currentPage = 1; applyFilterAndPagination(); };
+        document.getElementById('btnPrev').onclick = () => { if (currentPage > 1) { currentPage--; applyFilterAndPagination(); } };
+        document.getElementById('btnNext').onclick = () => { if (currentPage < Math.ceil(filteredNews.length / pageSize)) { currentPage++; applyFilterAndPagination(); } };
+
+        // --- FORM XỬ LÝ (CRUD) ---
+        const newsForm = document.getElementById('newsForm');
+        newsForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const isEditMode = document.getElementById('editMode').value === "true";
+            let id = document.getElementById('nId').value;
+            if (!id) {
+                // Tạo ID từ tiêu đề (slug) hoặc lấy ngẫu nhiên nếu bị trùng
+                id = document.getElementById('nTitle').value.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '') + '-' + Date.now();
+            }
+
+            let dateVal = document.getElementById('nDate').value;
+            if (!dateVal) {
+                dateVal = new Date().toISOString().split('T')[0];
+            }
+
+            const data = {
+                title: document.getElementById('nTitle').value.trim(),
+                category: document.getElementById('nCategory').value,
+                date: dateVal,
+                image: document.getElementById('nImage').value.trim(),
+                summary: document.getElementById('nSummary').value.trim(),
+                content: CKEDITOR.instances.nContent.getData().trim(),
+                featured: document.getElementById('nFeatured').checked
+            };
+
+            try {
+                showStatus("Đang lưu...", "bg-blue-500 text-white");
+                await setDoc(doc(db, "news", id), data, { merge: true });
+                showStatus("Lưu bài viết thành công!", "bg-green-500 text-white");
+                closeFormModal();
+            } catch (err) { showStatus("Lỗi: " + err.message, "bg-red-500 text-white"); }
+        };
+
+        // --- UPLOAD ẢNH QUA IMGBB API ---
+        window.uploadImage = async (input) => {
+            const file = input.files[0];
+            if (!file) return;
+
+            const uploadStatus = document.getElementById('uploadStatus');
+            const nImageInput = document.getElementById('nImage');
+
+            const IMGBB_API_KEY = "ca80289226aaf6f4ef42d4fa5cfe231c"; // Giữ API key từ adminProduct.html
+
+            uploadStatus.innerText = "⏳ Đang tải ảnh lên đám mây, vui lòng đợi...";
+            uploadStatus.className = "text-xs mt-1 text-orange-500 font-bold animate-pulse";
+
+            const formData = new FormData();
+            formData.append("image", file);
+
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    nImageInput.value = data.data.url;
+                    uploadStatus.innerText = "✅ Tải ảnh thành công!";
+                    uploadStatus.className = "text-xs mt-1 text-green-500 font-bold";
+                } else {
+                    uploadStatus.innerText = "❌ Lỗi: " + data.error.message;
+                    uploadStatus.className = "text-xs mt-1 text-red-500 font-bold";
+                }
+            } catch (error) {
+                uploadStatus.innerText = "❌ Lỗi kết nối tải ảnh!";
+                uploadStatus.className = "text-xs mt-1 text-red-500 font-bold";
+            }
+        };
+
+        // --- CÁC HÀM GIAO DIỆN ---
+        window.editNews = async (id) => {
+            const snap = await getDoc(doc(db, "news", id));
+            if (snap.exists()) {
+                const data = snap.data();
+                document.getElementById('nId').value = id;
+                document.getElementById('nTitle').value = data.title || "";
+                document.getElementById('nCategory').value = data.category || "Tin tức";
+                document.getElementById('nDate').value = data.date || "";
+                document.getElementById('nImage').value = data.image || "";
+                document.getElementById('nSummary').value = data.summary || "";
+                CKEDITOR.instances.nContent.setData(data.content || "");
+                document.getElementById('nFeatured').checked = data.featured || false;
+
+                document.getElementById('editMode').value = "true";
+                document.getElementById('modalTitle').innerText = "Sửa bài viết";
+                openFormModal();
+            }
+        };
+
+        window.requestDelete = (id, title) => {
+            currentDeleteId = id;
+            document.getElementById('confirmText').innerText = `Xóa bài viết "${title}"? Thao tác này sẽ xóa vĩnh viễn khỏi hệ thống.`;
+            document.getElementById('confirmModal').classList.remove('hidden');
+        };
+
+        document.getElementById('btnConfirmDelete').onclick = async () => {
+            try {
+                await deleteDoc(doc(db, "news", currentDeleteId));
+                showStatus("Đã xóa bài viết!", "bg-orange-500 text-white");
+                closeConfirmModal();
+            } catch (err) { showStatus("Lỗi xóa: " + err.message, "bg-red-500 text-white"); }
+        };
+
+        window.openFormModal = () => document.getElementById('newsModal').classList.remove('hidden');
+        window.closeFormModal = () => {
+            document.getElementById('newsModal').classList.add('hidden');
+            newsForm.reset();
+            CKEDITOR.instances.nContent.setData("");
+            document.getElementById('nId').value = "";
+            document.getElementById('editMode').value = "false";
+            document.getElementById('uploadStatus').innerText = "Hỗ trợ JPG, PNG. Tối đa 32MB.";
+            document.getElementById('uploadStatus').className = "text-xs mt-1 text-gray-400";
+            document.getElementById('modalTitle').innerText = "Thêm bài viết mới";
+        };
+        window.closeConfirmModal = () => document.getElementById('confirmModal').classList.add('hidden');
+
+        function showStatus(text, classes) {
+            const box = document.getElementById('statusBox');
+            box.innerText = text;
+            box.className = `mb-6 p-4 rounded-xl text-center font-bold shadow-sm border ${classes}`;
+            box.classList.remove('hidden');
+            setTimeout(() => box.classList.add('hidden'), 3000);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            CKEDITOR.replace('nContent', {
+                height: 400,
+                extraPlugins: 'uploadimage',
+                imageUploadUrl: 'https://api.imgbb.com/1/upload?key=ca80289226aaf6f4ef42d4fa5cfe231c'
+            });
+
+            CKEDITOR.on('instanceReady', function (evt) {
+                var editor = evt.editor;
+                var IMGBB_KEY = 'ca80289226aaf6f4ef42d4fa5cfe231c';
+
+                // ─── Hàm convert ảnh bất kỳ sang PNG rồi upload ImgBB ────────────
+                function convertAndUpload(file, callback) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.onload = function () {
+                            var canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            canvas.getContext('2d').drawImage(img, 0, 0);
+                            canvas.toBlob(function (blob) {
+                                var fd = new FormData();
+                                fd.append('image', blob, 'image.png');
+                                fetch('https://api.imgbb.com/1/upload?key=' + IMGBB_KEY, {
+                                    method: 'POST',
+                                    body: fd
+                                })
+                                .then(function(r){ return r.json(); })
+                                .then(function(json){
+                                    if (json.success) callback(null, json.data.url);
+                                    else callback(json.error ? json.error.message : 'Lỗi upload');
+                                })
+                                .catch(function(err){ callback(err.message); });
+                            }, 'image/png');
+                        };
+                        img.onerror = function () { callback('Không thể đọc ảnh'); };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+                // ─── Bắt sự kiện paste gốc (native) trên vùng soạn thảo ─────────
+                editor.on('contentDom', function () {
+                    var editable = editor.editable();
+                    editable.attachListener(editable, 'paste', function (evtInfo) {
+                        var nativeEvt = evtInfo.data.$;
+                        var items = nativeEvt.clipboardData && nativeEvt.clipboardData.items;
+                        if (!items) return;
+
+                        for (var i = 0; i < items.length; i++) {
+                            var item = items[i];
+                            if (item.kind !== 'file' || !item.type.startsWith('image/')) continue;
+
+                            var file = item.getAsFile();
+                            if (!file) continue;
+
+                            // Nếu là định dạng không được CKEditor hỗ trợ (avif, webp, ...)
+                            if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+                                // Ngăn CKEditor xử lý paste mặc định để tránh lỗi "not supported"
+                                nativeEvt.preventDefault();
+                                nativeEvt.stopPropagation();
+
+                                showStatus('⏳ Đang chuyển đổi ảnh, vui lòng đợi...', 'bg-blue-500 text-white');
+
+                                (function(f) {
+                                    convertAndUpload(f, function (err, url) {
+                                        if (err) {
+                                            showStatus('❌ Lỗi: ' + err, 'bg-red-500 text-white');
+                                        } else {
+                                            // Chèn thẻ <img> vào vị trí con trỏ hiện tại
+                                            editor.insertHtml('<img src="' + url + '" alt="image" style="max-width:100%"/>');
+                                            showStatus('✅ Chèn ảnh thành công!', 'bg-green-500 text-white');
+                                        }
+                                    });
+                                })(file);
+
+                                break; // Chỉ xử lý 1 ảnh mỗi lần paste
+                            }
+                            // Ảnh jpg/png: để CKEditor xử lý bình thường qua uploadimage plugin
+                        }
+                    });
+                });
+
+                // ─── Giữ nguyên xử lý fileUploadRequest/Response cho jpg/png ─────
+                editor.on('fileUploadRequest', function (evt) {
+                    var fileLoader = evt.data.fileLoader,
+                        file = fileLoader.file,
+                        formData = new FormData(),
+                        xhr = fileLoader.xhr;
+
+                    evt.stop();
+                    xhr.open('POST', fileLoader.uploadUrl, true);
+                    formData.append('image', file, fileLoader.fileName);
+                    xhr.send(formData);
+                });
+
+                editor.on('fileUploadResponse', function (evt) {
+                    evt.stop();
+                    var data = evt.data,
+                        xhr = data.fileLoader.xhr,
+                        response = JSON.parse(xhr.responseText);
+
+                    if (response.success) {
+                        data.url = response.data.url;
+                    } else {
+                        data.message = response.error ? response.error.message : 'Lỗi tải ảnh';
+                        evt.cancel();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
